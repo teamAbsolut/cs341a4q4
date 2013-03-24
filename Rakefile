@@ -21,7 +21,7 @@ task :testfast do
   Dir.glob('tests/*') do |file|
     fileName = file[/[^\/]*$/]
     solution = File.open( File.join('solutions', fileName ) ).read.split(' ')
-    output = `./a4fast <#{file}`
+    output = `./a4fast <#{file}`.chomp
 
     if solution.include? output
       puts "Passed #{fileName}"
