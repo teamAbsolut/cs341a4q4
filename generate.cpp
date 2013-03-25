@@ -1,29 +1,38 @@
 #include <iostream>
 #include <vector>
 
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
+#include <cstdlib>     /* srand, rand */
+#include <ctime>       /* time */
 
 using namespace std;
 
-int n = 0, m = 0;
-int* discovered;
+void populateMatrix (int **matrix, int n, int edges) {
+    while (edges > 0) {
+        int i = rand() % n;
+        int j = rand() % n;
+        if (!matrix[i][j]) {
+            matrix[i][j] = 1;
+            --edges;
+        }
+    }
+}
 
-
-
-int main () {
+int main (int argc, char **argv) {
 
     srand (time(NULL));
-    //cin >> n;
-    //cin >> m;
 
+    int n = 1000;
+    int m = 1000;
+    if (argc > 2) {
+        n = atoi(argv[1]);
+        m = atoi(argv[2]);
+    }
 
-    n = 10000;
-
-    int** array = new int*[n]();
+    int **array = new int*[n]();
     for (int i = 0; i < n; i++) {
         array[i] = new int[n]();
     }
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             // random number between 0 and 1
@@ -33,18 +42,10 @@ int main () {
             }
         }
     }
-    
-    int totalEdges = 0;
-    
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            if (array[i][j]) {
-                totalEdges++;
-            }
-        }
-    }
 
-    cout << n << " " << totalEdges << endl;
+    populateMatrix(array, n, m);
+    
+    cout << n << " " << m << endl;
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -53,5 +54,10 @@ int main () {
             }
         }
     }
+
+    for (int i = 0; i < n; ++i) {
+        delete[] array[i];
+    }
+    delete[] array;
 
 }
