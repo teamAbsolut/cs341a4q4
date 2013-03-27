@@ -19,6 +19,7 @@ desc "Run tests on the fast version"
 task :testfast do
   puts "Testing"
   Dir.glob('tests/*') do |file|
+    next if File.directory?( file )
     fileName = file[/[^\/]*$/]
     solution = File.open( File.join('solutions', fileName ) ).read.split(' ')
     output = `./a4fast <#{file}`.chomp
@@ -59,7 +60,7 @@ end
 desc "Compiles a debug version"
 task :compiledebug do
   puts "Compiling debug version"
-  `g++ -o a4slow a4slow.cpp -DDEBUG`
+  `g++ -o a4fast a4fast.cpp -DDEBUG`
 end
 
 task :default => :testslow
