@@ -4,7 +4,7 @@ task :testslow do
   Dir.glob('tests/*') do |file|
     fileName = file[/[^\/]*$/]
     solution = File.open( File.join('solutions', fileName ) ).read.split(' ')
-    output = `./a4slow <#{file}`.chomp
+    output = `a4slow.exe <#{file}`.chomp
 
     if solution.include? output
       puts "Passed #{fileName}"
@@ -22,7 +22,7 @@ task :testfast do
     next if File.directory?( file )
     fileName = file[/[^\/]*$/]
     solution = File.open( File.join('solutions', fileName ) ).read.split(' ')
-    output = `./a4fast <#{file}`.chomp
+    output = `a4fast <#{file}`.chomp
 
     if solution.include? output
       puts "Passed #{fileName}"
@@ -36,7 +36,7 @@ end
 desc "Run a specific test"
 task :specific, :arg1 do |t,args|
   solution = File.open( File.join('solutions', args[:arg1] ) ).read
-  output = `./a4slow <#{File.join('tests', args[:arg1] ) }`
+  output = `a4slow <#{File.join('tests', args[:arg1] ) }`
   if solution == output
     puts "Passed #{args[:arg1]}"
   else
